@@ -42,7 +42,7 @@ public class UserOutput {
         for(Car car : cars){
             candidate.put(car.getName(),car.getPosition());
         }
-        List listofMax = candidate.entrySet()//Map 값을 전체 출력
+        List listofMax = candidate.entrySet()
                 .stream()
                 .filter(entry -> entry.getValue() == Collections.max(candidate.values()))
                 .map(Map.Entry::getKey) // map함수를 통해 각원소의 키값을 빼온다
