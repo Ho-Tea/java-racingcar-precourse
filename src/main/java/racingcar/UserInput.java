@@ -11,41 +11,43 @@ public class UserInput {
     private List<String> carname;
     private String inputname;
     private String inputnum;
+    private ErrorDetection errordetect;
 
     UserInput()
     {
         carname = new ArrayList<>();
-        inputCarName();
-        inputTrialNum();
+        putCarName();
+        putTrialNum();
     }
 
 
-    private void inputCarName() {
+    private void putCarName() {
+        while(true){
             UserOutput.printFirst();
             inputname = Console.readLine();
             splitCarName();
-            for(String carnamed : carname) {
-                if (errorDetectionName(carnamed)){
-                    carname.clear();
-                    inputCarName();
-                }
+            errordetect = new ErrorDetectionName(carname);
+            if(errordetect.errorDetection() == 1)
+                continue;
+            break;
             }
     }
 
 
 
-    private void inputTrialNum(){
+    private void putTrialNum(){
         while(true) {
             UserOutput.printSecond();
             inputnum = Console.readLine();
-            if (errorDetectionNum(inputnum))
-                break;
-            continue;
+            errordetect = new ErrorDetectionNum(inputnum);
+            if (errordetect.errorDetection() == 1)
+                continue;
+            break;
         }
     }
     
     private void splitCarName(){
-        carname = Arrays.asList(inputname.split(","));
+        this.carname = Arrays.asList(inputname.split(","));
     }
 
     public List<String> getCarName(){
@@ -55,25 +57,4 @@ public class UserInput {
         return Integer.parseInt(inputnum);
     }
 
-    private boolean errorDetectionName(String read) {
-        try{
-            if(read.length() > 5 || read.length() == 0)
-                throw new IllegalArgumentException(UserOutput.getNameError());
-            return false;
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        return true;
-    }
-
-    private boolean errorDetectionNum(String read){
-        try{
-            if(!(read.chars().allMatch(Character::isDigit)))
-                throw new IllegalArgumentException(UserOutput.getNumError());
-            return true;
-        }catch (IllegalArgumentException e){
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
 }

@@ -21,7 +21,7 @@ public class Application {
         for(int i = input.getTrialNum();i > 0;i--){
             for(Car car:cars)
                 car.move();
-            output.getProcess(cars);
+            output.printProcess(cars);
         }
 
         output.getWinner(cars);

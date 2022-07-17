@@ -5,8 +5,8 @@ import java.util.stream.Collectors;
 
 public class UserOutput {
     UserOutput(){}
-    static final String nameError = "[Error] 자동차 이름이 맞지 않습니다.";
-    static final String numError = "[Error] 시도 횟수는 숫자여야 한다.";
+    static final String nameError = "[ERROR] 자동차 이름이 맞지 않습니다.";
+    static final String numError = "[ERROR] 시도 횟수는 숫자여야 한다.";
 
     public static String getNameError(){
         return nameError;
@@ -23,7 +23,7 @@ public class UserOutput {
     public void printResult(){
         System.out.println("실행 결과");
     }
-    public void getProcess(List<Car> cars){
+    public void printProcess(List<Car> cars){
         for(Car car : cars){
             System.out.println(car.getName()+" : "+ getProcessline(car));
         }
@@ -37,16 +37,16 @@ public class UserOutput {
         return line;
     }
 
-    public void getWinner(List<Car> cars){
+    public void getWinner(List<Car> cars){  //코드 분석해보기!!!
         Map<String, Integer> candidate = new HashMap<>();
         for(Car car : cars){
             candidate.put(car.getName(),car.getPosition());
         }
-        List listofMax = candidate.entrySet()
+        List listofMax = candidate.entrySet()//Map 값을 전체 출력
                 .stream()
                 .filter(entry -> entry.getValue() == Collections.max(candidate.values()))
-                .map(Map.Entry::getKey)
-                .collect(Collectors.toList());
+                .map(Map.Entry::getKey) // map함수를 통해 각원소의 키값을 빼온다
+                .collect(Collectors.toList()); //list로 만든다
         String winner = String.join(", ",listofMax);
         System.out.println("최종 우승자 : "+ winner);
     }
